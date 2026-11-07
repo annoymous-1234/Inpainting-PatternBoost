@@ -1,0 +1,40 @@
+{
+  "experiment_name": "K40_ddpm_main_rt44",
+  "status": "ok",
+  "started_at": "2026-07-25T15:20:28",
+  "finished_at": "2026-07-25T16:42:20",
+  "argv": [
+    "scripts/run_patternboost_experiment.py",
+    "--config",
+    "exp-config/main/ddpm/K40_ddpm_main_rt44.yaml",
+    "--device",
+    "cuda",
+    "--force"
+  ],
+  "args": {
+    "config": "exp-config/main/ddpm/K40_ddpm_main_rt44.yaml",
+    "device": "cuda",
+    "force": true
+  },
+  "cwd": "/root/autodl-tmp/extremal-combinatorics/Inpainting-PatternBoost/packing",
+  "project_root": "/root/autodl-tmp/extremal-combinatorics/Inpainting-PatternBoost/packing",
+  "config_path": "/root/autodl-tmp/extremal-combinatorics/Inpainting-PatternBoost/packing/exp-config/main/ddpm/K40_ddpm_main_rt44.yaml",
+  "run_dir": "/root/autodl-tmp/extremal-combinatorics/Inpainting-PatternBoost/packing/checkpoints/K40_ddpm_main_rt44",
+  "python": {
+    "executable": "/root/miniconda3/bin/python",
+    "version": "3.12.3 | packaged by Anaconda, Inc. | (main, May  6 2024, 19:46:43) [GCC 11.2.0]",
+    "platform": "Linux-5.15.0-176-generic-x86_64-with-glibc2.35"
+  },
+  "torch": {
+    "torch_version": "2.8.0+cu128",
+    "cuda_available": true,
+    "cuda_version": "12.8",
+    "cuda_device_count": 1,
+    "cuda_device_name": "NVIDIA GeForce RTX 4080 SUPER"
+  },
+  "git": {
+    "commit": "320ef474ea052c81446efda82aefd663f49a5cb4",
+    "dirty": true,
+    "status_short": "M logs/seed-sweep/K40_fm_main_rt23.log\n?? logs/seed-sweep/K40_ddpm_main_rt44.log"
+  }
+}

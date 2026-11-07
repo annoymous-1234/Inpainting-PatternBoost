@@ -1,0 +1,37 @@
+{
+  "experiment_name": "K26_ddpm_main_batch4",
+  "status": "ok",
+  "started_at": "2026-07-26T16:12:16",
+  "finished_at": "2026-07-26T17:07:24",
+  "argv": [
+    "scripts/run_patternboost_experiment.py",
+    "--config",
+    "exp-config/rebuttal-batch4/K26_ddpm_main_batch4.yaml"
+  ],
+  "args": {
+    "config": "exp-config/rebuttal-batch4/K26_ddpm_main_batch4.yaml",
+    "device": null,
+    "force": false
+  },
+  "cwd": "/root/autodl-tmp/extremal-combinatorics/Inpainting-PatternBoost/packing",
+  "project_root": "/root/autodl-tmp/extremal-combinatorics/Inpainting-PatternBoost/packing",
+  "config_path": "/root/autodl-tmp/extremal-combinatorics/Inpainting-PatternBoost/packing/exp-config/rebuttal-batch4/K26_ddpm_main_batch4.yaml",
+  "run_dir": "/root/autodl-tmp/extremal-combinatorics/Inpainting-PatternBoost/packing/checkpoints/K26_ddpm_main_batch4",
+  "python": {
+    "executable": "/root/miniconda3/bin/python",
+    "version": "3.12.3 | packaged by Anaconda, Inc. | (main, May  6 2024, 19:46:43) [GCC 11.2.0]",
+    "platform": "Linux-5.15.0-176-generic-x86_64-with-glibc2.35"
+  },
+  "torch": {
+    "torch_version": "2.8.0+cu128",
+    "cuda_available": true,
+    "cuda_version": "12.8",
+    "cuda_device_count": 1,
+    "cuda_device_name": "NVIDIA GeForce RTX 4080 SUPER"
+  },
+  "git": {
+    "commit": "0a63ec9544f2d9835f197765a87ea38834405d56",
+    "dirty": true,
+    "status_short": "?? ../no-three-in-line/checkpoints/n25_random_op_rt44/\n?? ../no-three-in-line/checkpoints/n30_random_op_rt0/\n?? checkpoints/K26_ddpm_main_batch4/\n?? checkpoints/K26_ddpm_randperturb_s04_rt1234/\n?? checkpoints/K26_ddpm_randperturb_s05_rt1234/\n?? checkpoints/K26_ddpm_randperturb_s05_rt44/\n?? checkpoints/K26_ddpm_randperturb_s06_rt1234/\n?? checkpoints/K26_ddpm_randperturb_s06_rt44/\n?? checkpoints/K26_ddpm_randperturb_s10_rt1234/\n?? checkpoints/K26_fm_randperturb_s05_rt1234/\n?? checkpoints/K26_fm_randperturb_s05_rt44/\n?? checkpoints/K26_fm_randperturb_s06_rt1234/\n?? checkpoints/K26_fm_randperturb_s06_rt44/\n?? checkpoints/K40_ddpm_main_rt23/analysis_batch41/\n?? logs/batch4/\n?? logs/random-operator/"
+  }
+}

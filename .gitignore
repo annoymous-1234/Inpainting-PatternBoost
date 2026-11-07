@@ -1,0 +1,36 @@
+# Python
+__pycache__/
+*.py[cod]
+*.so
+*.egg-info/
+
+# Virtual envs
+.venv/
+venv/
+env/
+
+# Editors
+.vscode/
+.idea/
+*.swp
+*~
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Experiment artifacts
+packing/checkpoints/
+packing/logs/
+packing/tmp/
+packing/tmp_experiments/
+packing/demo_rollout.png
+no-three-in-line/checkpoints/
+no-three-in-line/logs/
+no-three-in-line/tmp/
+no-three-in-line/tmp_experiments/
+
+# Model and cache files
+*.pt
+candidates.jsonl
+.pytest_cache/

@@ -1,0 +1,20 @@
+{
+  "config": {
+    "K": 15,
+    "pool": 2048,
+    "rounds": 40,
+    "samples_per_round": 2048,
+    "seed": 23
+  },
+  "elapsed_sec": 165.6459903717041,
+  "status": "ok",
+  "summary": {
+    "best_score": 1.4875072372430518,
+    "pool_score_best": 1.4875072372430518,
+    "pool_score_mean": 1.2577821708096089,
+    "pool_score_p50": 1.2462606597090151,
+    "pool_score_p75": 1.2779435923368718,
+    "pool_score_p90": 1.3121063629864615,
+    "pool_size": 2048
+  }
+}

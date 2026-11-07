@@ -1,0 +1,39 @@
+{
+  "experiment_name": "30-nosrp-d128-r40-s23",
+  "status": "ok",
+  "started_at": "2026-05-05T03:41:45",
+  "finished_at": "2026-05-05T04:30:13",
+  "argv": [
+    "packing/scripts/run_patternboost_experiment.py",
+    "--config",
+    "packing/experiment/batch-exp2-s23/15-nosrp-d128-r40.yaml",
+    "--device",
+    "cuda"
+  ],
+  "args": {
+    "config": "packing/experiment/batch-exp2-s23/15-nosrp-d128-r40.yaml",
+    "device": "cuda",
+    "force": false
+  },
+  "cwd": "packing",
+  "project_root": "packing",
+  "config_path": "packing/experiment/batch-exp2-s23/15-nosrp-d128-r40.yaml",
+  "run_dir": "packing/checkpoints/30-nosrp-d128-r40-s23",
+  "python": {
+    "executable": "/root/miniconda3/bin/python",
+    "version": "3.12.3 | packaged by Anaconda, Inc. | (main, May  6 2024, 19:46:43) [GCC 11.2.0]",
+    "platform": "Linux-5.4.0-162-generic-x86_64-with-glibc2.35"
+  },
+  "torch": {
+    "torch_version": "2.8.0+cu128",
+    "cuda_available": true,
+    "cuda_version": "12.8",
+    "cuda_device_count": 1,
+    "cuda_device_name": "NVIDIA GeForce RTX 3080 Ti"
+  },
+  "git": {
+    "commit": "a5db960e975091b0bbd9f8f67c40ecc47ed70bff",
+    "dirty": true,
+    "status_short": "M experiment/batch-exp2/26-nosrp-d128-r40.yaml\n M experiment/batch-exp2/30-nosrp-d128-r40.yaml\n D experiment/batch-exp2/32-nosrp-d128-r20-continue.yaml\n?? checkpoints/30-nosrp-d128-r40-s23/\n?? checkpoints/32-nosrp-d128-r40-noise-03/\n?? checkpoints/32-nosrp-d128-r40-noise-05/\n?? experiment/batch-exp-ablation-noise/\n?? experiment/batch-exp2-s23/\n?? experiment/batch-exp2/32-nosrp-d128-r40.yaml"
+  }
+}

@@ -1,0 +1,221 @@
+project:
+  seed: 23
+  dtype: float32
+problem:
+  K: 26
+  max_steps: 7
+env:
+  activation_budget: 4
+  commit_order: random
+  center_conflict_policy: none
+  center_duplicate_eps: 1.0e-08
+  initialization_mode: random_legal
+  done_on_all_active: true
+safety:
+  clip_positions: true
+  radius_max: 0.5
+  feasibility_tol: 1.0e-12
+rollout:
+  policy_name: noisy_hint
+  record_snapshots: false
+  render_final: true
+  save_figure: true
+  figure_path: demo_rollout.png
+render:
+  figsize:
+    - 6
+    - 6
+  dpi: 140
+  show_slot_labels: true
+  active_alpha: 0.85
+  masked_alpha: 0.2
+  active_color: '#1f77b4'
+  masked_color: '#7f7f7f'
+model:
+  preset: custom
+  d_model: 128
+  n_heads: 8
+  n_layers: 6
+  mlp_ratio: 4.0
+  dropout: 0.01
+  activation: gelu
+  use_global_token: true
+  use_outer_step_embedding: true
+  outer_step_embedding_type: sin
+  use_inner_time_embedding: true
+  slot_features:
+    use_fixed_flag: true
+    use_latent: true
+    use_physical: false
+    use_wall_slack: false
+    use_extra_slot_features: true
+    extra_slot_feature_dim: 4
+  pair_bias:
+    enabled: false
+    pair_bias_mode: scalar
+    use_pair_dxdy: true
+    use_pair_distance: true
+    use_pair_gap: false
+    use_pair_radii: false
+    use_pair_role_bits: false
+    use_pair_abs_delta: false
+    use_pair_sqdist: false
+  heads:
+    enable_ddpm_head: true
+    enable_fm_head: false
+    enable_simple_proposal_head: false
+    enable_value_head: false
+    ddpm_target: eps
+    ddpm_zero_fixed_outputs: true
+    fm_zero_fixed_outputs: false
+    proposal_target: delta_z
+    proposal_zero_fixed_outputs: true
+train:
+  mode: ddpm
+  dataset_path: demo_teacher_layouts.pt
+  batch_size: 8
+  num_epochs: 2
+  lr: 0.001
+  weight_decay: 0.0
+  fixed_ratio_min: 0.0
+  fixed_ratio_max: 0.5
+  assignment_mode_no_draft: xy
+  assignment_mode_with_draft: draft_match
+  synthetic_draft_mode: mixed
+  synthetic_draft_scale: 0.15
+  draft_center_jitter_std: 0.02
+  draft_radius_scale_down: 0.25
+  draft_radius_scale_up: 0.1
+  checkpoint_dir: checkpoints
+  num_workers: 0
+ddpm:
+  num_samples: 1
+  num_steps: 64
+  beta_start: 0.00005
+  beta_end: 0.04
+  tau_start_infer: 0.8
+  use_draft_warmstart: true
+  use_draft_feature: true
+  fixed_mode: frozen_full_state
+  noising_center: target
+  draft_strength: 0.7
+  use_timestep_subsampling: true
+  infer_num_steps: 32
+fm:
+  num_samples: 4
+  num_steps: 30
+  source_noise_std: 0.05
+  fixed_mode: frozen_full_state
+  return_terminal_velocity_norm: true
+  return_short_displacement: true
+  short_displacement_fraction: 0.25
+outer_loop:
+  max_rounds: 10
+  candidate_mode: all_free
+  segmented_demo: false
+  segmented_split: 0.5
+  representative_reduction: first_sample
+demo_priority:
+  lambda_var: 1.0
+  lambda_drift: 0.0
+  lambda_motion: 0.0
+patternboost:
+  enabled: true
+  pool:
+    max_size: 2048
+    dedup_tol: 1.0e-08
+    init_sources:
+      - greedy
+    greedy_num_seeds: 2048
+    save_path:
+    sampling:
+      mode: score_bucket_rank_mixture
+      alpha: 1.0
+      offset: 1.0
+      top_fraction: 0.5
+      uniform_mix: 0.1
+  edit:
+    policies:
+      - random
+      - random_point_knn
+    policy_weights:
+      - 0.4
+      - 0.6
+    edit_ratios:
+      - 0.1
+      - 0.2
+      - 0.4
+      - 0.6
+      - 1.0
+    ratio_weights:
+      - 0.3
+      - 0.3
+      - 0.2
+      - 0.15
+      - 0.05
+    knn_k:
+  training:
+    mode: ddpm
+    samples_per_generation: 2048
+    epochs_per_generation: 2
+    batch_size: 32
+    lr: 0.0005
+    weight_decay: 0.0
+    fine_tune_from_previous: true
+    use_draft_match: true
+    checkpoint_every_generations: 10
+  generation:
+    num_generations: 40
+    candidates_per_generation: 2048
+    candidate_batch_size: 32
+    modes:
+      - full_episode
+    mode_weights:
+      - 1.0
+    greedy_complete_unfinished: true
+  polish:
+    refresh_lp_cache: false
+    srp_enabled: false
+    srp_top_k: 2048
+    srp_num_workers: 4
+    srp_min_improvement: 1.0e-12
+    srp_Imax: 400
+    srp_m: 30
+    srp_beta: 0.99
+    srp_backtrack: 5
+    srp_step_center: 0.05
+    srp_step_radius: 0.001
+    srp_w_overlap: 1000.0
+    srp_w_wall: 1000.0
+    srp_alpha_sum_r: 0.2
+    srp_lbfgs_gtol: 1.0e-8
+    srp_lbfgs_ftol: 1.0e-12
+    srp_lbfgs_maxiter: 1000
+    srp_lbfgs_maxcor: 20
+    srp_use_small_radius_branch: true
+    srp_init_r0_small: 0.01
+    srp_init_rjitter_small: 0.005
+    srp_small_branch_step_scale: 0.2
+    srp_strict_shrink: true
+    srp_strict_shrink_margin: 1.0e-8
+  runtime:
+    seed: 23
+    device: cuda
+    checkpoint_dir: checkpoints/K26_ddpm_main_rt23
+    run_name: exp
+    log_jsonl: true
+    save_checkpoints: true
+    log_candidates_jsonl: false
+    top_pool_snapshot_every_generations: 5
+policies:
+  random_legal: {}
+  noisy_hint:
+    noise_std_xy: 0.08
+    noise_std_r: 0.05
+rl:
+  placeholder: true
+resume:
+  enabled: false
+  checkpoint_path:
+  top_pool_path:
+  load_optimizer: true

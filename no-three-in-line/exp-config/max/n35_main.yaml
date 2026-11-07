@@ -1,0 +1,221 @@
+n: 35
+model:
+  d_model: 256
+  num_layers: 12
+  num_heads: 8
+  d_ff: 1024
+  dropout: 0.0
+  time_embedding_type: sinusoidal
+  use_global_token: true
+  use_value_head: false
+  state_head_type: classifier
+point_features:
+  use_uv: true
+  use_uv_sumdiff: false
+  use_uv_product: false
+  use_fourier_u: false
+  use_fourier_v: false
+  use_fourier_sumdiff: false
+  fourier_frequencies:
+    - 1.0
+    - 2.0
+    - 4.0
+    - 8.0
+  use_y_onehot: true
+  use_x_onehot: true
+  use_mod_features: false
+  mod_bases:
+    - 2
+    - 3
+    - 5
+    - 7
+  use_mod_x: false
+  use_mod_y: false
+  use_mod_sum: false
+  use_mod_diff: false
+decoding:
+  slot_selection:
+    strategy: topk
+    top_k: 8
+  candidate_selection:
+    strategy: topk
+    top_k: 4
+supervised:
+  validation:
+    enabled: true
+    validate_with_env: true
+    fail_on_invalid: true
+    drop_invalid: true
+    round_trip_check: true
+  encoding:
+    num_slot_orders: 4
+    slot_order_seed: 123334
+  corruption:
+    total_steps: 5
+    q_min: 0.2
+    q_max: 0.8
+    sample_step_min: 0
+    corruption_mode: exact_ratio
+  partial_target:
+    restore_schedule_type: fixed
+    restore_k_fixed: 6
+    restore_k_min: 1
+    restore_k_max: 4
+    use_multiple_orders: true
+  dataset:
+    mode: full
+    partial_prob: 0.5
+  loss:
+    filled_weight: 1.0
+    mask_weight: 1.0
+    full_loss_weight: 1.0
+    partial_loss_weight: 1.0
+    full_supervision_mode: all_tokens
+    partial_supervision_mode: all_missing
+  trainer:
+    lr: 0.0003
+    weight_decay: 0.0
+    max_epochs: 3
+    grad_clip_norm: 100.0
+    eval_every: 100
+    rollout_eval_every: 3
+    save_every: 5
+  rollout_eval:
+    enabled: true
+    eval_types:
+      - partial_state
+    num_episodes: 10
+    seed: 0
+    record_step_metrics: false
+    max_denoise_steps: 1
+    k_schedule_mode: fixed
+    fixed_k: 6
+    k_min: 1
+    k_max: 4
+    partial_start_step_ids:
+      - 0
+    partial_corruption_mode:
+    env_num_search_attempts: 5
+    env_allow_existing_deletions: false
+    decode_ablation_configs: {}
+  data_paths:
+    train_jsonl: data/n15/supervised_solutions.jsonl
+    train_cache: data/n15/train_solutions.pt
+    val_jsonl: data/n15/val_solutions.jsonl
+    val_cache: data/n15/val_solutions.pt
+  runtime:
+    batch_size: 8
+    num_workers: 0
+    seed: 0
+    device: cuda
+    checkpoint_dir: checkpoints
+  curriculum:
+    stage1_epochs: 5
+    stage2_epochs: 0
+    stage2_mode: mixed
+    stage2_partial_prob: 0.9
+patternboost:
+  mask_ratios:
+    - 0.0
+    - 0.2
+    - 0.2
+    - 0.4
+    - 0.4
+    - 0.6
+    - 0.8
+  pool:
+    max_size: 10000
+    init_sources:
+      - greedy
+    greedy_num_seeds: 10000
+    supervised_cache_paths:
+    top_pool_paths:
+    save_path:
+  training:
+    samples_per_generation: 20000
+    epochs_per_generation: 1
+    checkpoint_every_generations: 10
+    batch_size: 16
+    lr: 0.0004
+    grad_clip_norm: 1.0
+    fine_tune_from_previous: true
+    init_checkpoint_path:
+    init_optimizer_from_checkpoint: true
+    pool_sampling:
+      mode: score_bucket_rank_mixture
+      alpha: 1.0
+      offset: 1.0
+      top_fraction: 0.5
+      uniform_mix: 0.1
+  generation:
+    num_generations: 40
+    candidates_per_generation: 20000
+    candidate_batch_size: 64
+    remask_modes:
+      - random
+      - replaceability
+    remask_mode_weights:
+      - 0.2
+      - 0.8
+  schedules:
+    mask_ratios_by_generation:
+      - start: 1
+        mask_ratios:
+          - 0.0
+          - 0.2
+          - 0.2
+          - 0.4
+          - 0.4
+          - 0.6
+          - 0.8
+      - start: 20
+        mask_ratios:
+          - 0.2
+          - 0.2
+          - 0.2
+          - 0.2
+          - 0.4
+          - 0.4
+          - 0.6
+    remask_mode_weights_by_generation:
+      - start: 1
+        weights:
+          - 0.3
+          - 0.7
+      - start: 20
+        weights:
+          - 0.1
+          - 0.9
+  decode:
+    num_steps: 5
+    quota_ratios:
+      - 0.2
+      - 0.2
+      - 0.2
+      - 0.2
+      - 0.2
+    num_candidates_per_slot: 3
+    y_temperature: 1.0
+    env_num_search_attempts: 5
+    env_allow_existing_deletions: false
+  selector:
+    confidence_metric: margin
+    legal_choice_metric: mrv
+    confidence_weight: 1.0
+    legal_weight: 0.15
+    noise_std: 0.01
+  saturation:
+    enabled: true
+    slot_order: mrv
+    y_order: random
+  top_pool_augmentation:
+    enabled: false
+    max_source_entries:
+  runtime:
+    seed: 404
+    device: cuda
+    num_workers: 0
+    checkpoint_dir: checkpoints/n35_main
+    run_name: exp
+    log_jsonl: true
+    log_candidates_jsonl: false
